@@ -54,12 +54,7 @@ export default function Courses() {
                   <p className="text-gray-500 text-sm mb-4">
                     {course.description}
                   </p>
-                  <Button
-                    as="a"
-                    href="#"
-                    variant="primary"
-                    className="!inline-block !p-0 !rounded-none !bg-transparent !text-primary !text-sm hover:!bg-transparent hover:!translate-y-0"
-                  >
+                  <Button as="a" href="#" variant="text">
                     View Course &rarr;
                   </Button>
                 </div>
@@ -177,12 +172,7 @@ export default function Courses() {
                     {post.category} &middot; {post.date}
                   </p>
                   <h3 className="font-bold mb-3">{post.title}</h3>
-                  <Button
-                    as="a"
-                    href="#"
-                    variant="primary"
-                    className="!inline-block !p-0 !rounded-none !bg-transparent !text-primary !text-sm hover:!bg-transparent hover:!translate-y-0"
-                  >
+                  <Button as="a" href="#" variant="text">
                     Read More &rarr;
                   </Button>
                 </div>
