@@ -30,3 +30,25 @@ test('renders the about section heading', () => {
     screen.getByRole('heading', { name: /agriculture is changing/i })
   ).toBeInTheDocument();
 });
+
+test('renders the services section heading', () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>
+  );
+  expect(
+    screen.getByRole('heading', { name: /our services/i, level: 2 })
+  ).toBeInTheDocument();
+});
+
+test('renders the founder section heading', () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>
+  );
+  expect(
+    screen.getByRole('heading', { name: /meet monish gowda/i })
+  ).toBeInTheDocument();
+});
