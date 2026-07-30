@@ -1,7 +1,9 @@
 import { useInView } from '../hooks/useInView';
 
+const REVEAL_OPTIONS = { threshold: 0.15 };
+
 export default function RevealSection({ as = 'section', id, className = '', children }) {
-  const { ref, isInView } = useInView({ threshold: 0.15 });
+  const { ref, isInView } = useInView(REVEAL_OPTIONS);
   const Tag = as;
 
   return (
