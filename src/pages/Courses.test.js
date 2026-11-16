@@ -43,13 +43,13 @@ test('renders all five course titles', () => {
   ).toBeInTheDocument();
 });
 
-test('renders the testimonials heading', () => {
+test('renders the why choose agri monk heading', () => {
   render(
     <MemoryRouter>
       <Courses />
     </MemoryRouter>
   );
   expect(
-    screen.getByRole('heading', { name: /what our learners say/i })
+    screen.getByRole('heading', { name: /why choose agri monk/i })
   ).toBeInTheDocument();
 });

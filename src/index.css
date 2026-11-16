@@ -7,3 +7,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@keyframes leaf-drift {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.75;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(650px) translateX(var(--sway-x)) rotate(var(--spin));
+  }
+}
+
+.animate-leaf-drift {
+  animation-name: leaf-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriMonk India — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Lora:ital@1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #4a6741; --green-light: #6b8f61; --green-pale: #e8efe6;
+    --cream: #f7f5f0; --ink: #1e2419; --muted: #7a8472;
+  }
+  body {
+    background: var(--cream); color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+  .bg-circle {
+    position: fixed; width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, #d4e5cf 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    opacity: 0.5; z-index: 0; animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.06); }
+  }
+  .container {
+    position: relative; z-index: 1; text-align: center;
+    padding: 2rem; max-width: 680px; width: 100%;
+  }
+  .plant-wrap {
+    margin: 0 auto 3rem; width: 100px; height: 120px;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.2s; position: relative;
+  }
+  .plant-sway {
+    transform-origin: 50px 98px;
+    animation: sway 4s ease-in-out infinite 3.2s;
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(1.8deg); }
+    75% { transform: rotate(-1.8deg); }
+  }
+  .stem { stroke-dasharray: 200; stroke-dashoffset: 200; animation: grow 2s ease forwards 0.5s; }
+  .soil { stroke-dasharray: 80; stroke-dashoffset: 80; animation: grow 0.8s ease forwards 0.3s; }
+  @keyframes grow { to { stroke-dashoffset: 0; } }
+  .flutter-l { transform-origin: 22px 60px; animation: leafIn 0.6s ease forwards 1.8s, flutter 3.5s ease-in-out infinite 3.5s; opacity: 0; }
+  .flutter-r { transform-origin: 78px 44px; animation: leafIn 0.6s ease forwards 2.1s, flutter 4.2s ease-in-out infinite 4s; opacity: 0; }
+  .flutter-top { transform-origin: 50px 40px; animation: leafIn 0.6s ease forwards 2.4s, nod 5s ease-in-out infinite 3.8s; opacity: 0; }
+  @keyframes leafIn { to { opacity: 1; } }
+  @keyframes flutter {
+    0%, 100% { transform: rotate(0deg) scaleY(1); }
+    40% { transform: rotate(4deg) scaleY(0.93); }
+    70% { transform: rotate(-3deg) scaleY(0.97); }
+  }
+  @keyframes nod {
+    0%, 100% { transform: rotate(0deg); }
+    40% { transform: rotate(3deg); }
+    70% { transform: rotate(-2deg); }
+  }
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: var(--green-light); opacity: 0;
+    animation: float-up linear infinite;
+  }
+  @keyframes float-up {
+    0% { opacity: 0; transform: translateY(0) translateX(0) scale(1); }
+    15% { opacity: 0.55; }
+    85% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-60px) translateX(var(--dx)) scale(0.4); }
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-pale); color: var(--green);
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green-light); animation: pulse 2s ease-in-out infinite 2s;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+  .brand {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 0.95; color: var(--ink); letter-spacing: -0.02em;
+    margin-bottom: 0.25rem; opacity: 0; animation: fadeUp 0.9s ease forwards 1.4s;
+  }
+  .brand span { color: var(--green); }
+  .brand-sub {
+    font-size: 13px; font-weight: 300; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.9s ease forwards 1.6s;
+  }
+  .tagline {
+    font-family: 'Lora', serif; font-style: italic;
+    font-size: clamp(1.25rem, 3vw, 1.75rem); color: var(--green);
+    margin-bottom: 2.5rem; min-height: 2.4em; line-height: 1.4;
+  }
+  .tagline .word {
+    display: inline-block; opacity: 0; transform: translateY(20px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .tagline .word.visible { opacity: 1; transform: translateY(0); }
+  .tagline .word-cool {
+    position: relative; color: var(--ink); font-style: normal;
+    font-family: 'Instrument Serif', serif; font-size: 1.08em;
+  }
+  .tagline .word-cool::after {
+    content: ''; position: absolute; left: 0; bottom: -2px;
+    width: 0; height: 2.5px; background: var(--green-light);
+    border-radius: 2px; transition: width 0.5s ease 0.15s;
+  }
+  .tagline .word-cool.visible::after { width: 100%; }
+  .divider {
+    width: 40px; height: 1px; background: var(--green-light);
+    margin: 0 auto 2rem; opacity: 0; animation: fadeUp 0.8s ease forwards 2.1s;
+  }
+  .coming-text {
+    font-size: 13px; font-weight: 300; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    opacity: 0; animation: fadeUp 0.8s ease forwards 2.3s;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .leaf-float {
+    position: fixed; pointer-events: none; z-index: 0;
+    animation: leafDrift linear infinite; opacity: 0;
+  }
+  @keyframes leafDrift {
+    0% { opacity: 0; transform: translateY(-20px) rotate(0deg) translateX(0); }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { opacity: 0; transform: translateY(110vh) rotate(var(--spin)) translateX(var(--sway-x)); }
+  }
+  
+  /* Butterfly - Path updated to cover whole site */
+  .butterfly {
+    position: fixed; z-index: 4; pointer-events: none;
+    animation: butterflyPath 25s ease-in-out infinite 2s; opacity: 0;
+    top: 0; left: 0;
+  }
+  @keyframes butterflyPath {
+    0% { opacity: 0; transform: translate(-10vw, 20vh) rotate(15deg); }
+    5% { opacity: 1; }
+    15% { transform: translate(25vw, 10vh) rotate(-10deg); }
+    30% { transform: translate(80vw, 40vh) rotate(20deg); }
+    45% { transform: translate(50vw, 85vh) rotate(-15deg); }
+    60% { transform: translate(15vw, 60vh) rotate(10deg); }
+    75% { transform: translate(70vw, 15vh) rotate(-5deg); }
+    90% { transform: translate(110vw, 50vh) rotate(20deg); opacity: 1; }
+    100% { opacity: 0; transform: translate(110vw, 50vh); }
+  }
+  .wing-l, .wing-r {
+    animation: wingFlap 0.15s ease-in-out infinite; transform-origin: center center;
+  }
+  .wing-r { animation-delay: 0.07s; }
+  @keyframes wingFlap {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.2); }
+  }
+
+  .bird {
+    position: fixed; z-index: 1; opacity: 0;
+    animation: birdFly linear infinite;
+  }
+  @keyframes birdFly {
+    0% { opacity: 0; transform: translateX(-60px); }
+    5% { opacity: 0.7; }
+    95% { opacity: 0.7; }
+    100% { opacity: 0; transform: translateX(105vw); }
+  }
+  .bird-wing { animation: birdWing 0.4s ease-in-out infinite; transform-origin: 10px 5px; }
+  @keyframes birdWing {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-25deg); }
+  }
+  .sun-wrap {
+    position: fixed; top: 40px; right: 60px; z-index: 0;
+    opacity: 0; animation: fadeUp 1.5s ease forwards 1s;
+  }
+  .sun-ray { transform-origin: 30px 30px; animation: sunSpin 20s linear infinite; }
+  @keyframes sunSpin { to { transform: rotate(360deg); } }
+  .firefly {
+    position: fixed; width: 3px; height: 3px; border-radius: 50%;
+    background: #c8e88a; box-shadow: 0 0 4px 2px #c8e88a;
+    z-index: 2; animation: firefly ease-in-out infinite; opacity: 0;
+  }
+  @keyframes firefly {
+    0%, 100% { opacity: 0; transform: translate(0,0); }
+    20%, 80% { opacity: 0.8; }
+    50% { opacity: 0.3; transform: translate(var(--fx), var(--fy)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-circle"></div>
+
+<div class="sun-wrap">
+  <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <circle cx="30" cy="30" r="12" fill="#f5d97a" opacity="0.9"/>
+    <g class="sun-ray">
+      <line x1="30" y1="4" x2="30" y2="12" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="30" y1="48" x2="30" y2="56" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="4" y1="30" x2="12" y2="30" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="48" y1="30" x2="56" y2="30" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="11" y1="11" x2="17" y2="17" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="43" y1="43" x2="49" y2="49" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="49" y1="11" x2="43" y2="17" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+      <line x1="11" y1="49" x2="17" y2="43" stroke="#f5d97a" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </svg>
+</div>
+
+<svg class="leaf-float" style="top:-30px;left:15%;width:18px;height:22px;--spin:280deg;--sway-x:60px;animation-duration:9s;animation-delay:4s;" viewBox="0 0 18 22"><path d="M9 20 C4 14 1 8 9 2 C17 8 14 14 9 20Z" fill="#6b8f61" opacity="0.7"/><line x1="9" y1="20" x2="9" y2="2" stroke="#4a6741" stroke-width="0.8"/></svg>
+<svg class="leaf-float" style="top:-20px;left:70%;width:14px;height:18px;--spin:200deg;--sway-x:-50px;animation-duration:12s;animation-delay:7s;" viewBox="0 0 14 18"><path d="M7 16 C3 11 1 6 7 1 C13 6 11 11 7 16Z" fill="#8aaa78" opacity="0.6"/></svg>
+<svg class="leaf-float" style="top:-10px;left:40%;width:20px;height:24px;--spin:320deg;--sway-x:40px;animation-duration:10s;animation-delay:10s;" viewBox="0 0 20 24"><path d="M10 22 C5 15 1 9 10 2 C19 9 15 15 10 22Z" fill="#5a7a50" opacity="0.65"/></svg>
+<svg class="leaf-float" style="top:-15px;left:85%;width:12px;height:16px;--spin:250deg;--sway-x:-30px;animation-duration:8s;animation-delay:13s;" viewBox="0 0 12 16"><path d="M6 14 C2 9 1 5 6 1 C11 5 10 9 6 14Z" fill="#7a9e6a" opacity="0.55"/></svg>
+<svg class="leaf-float" style="top:-25px;left:55%;width:16px;height:20px;--spin:190deg;--sway-x:70px;animation-duration:11s;animation-delay:16s;" viewBox="0 0 16 20"><path d="M8 18 C3 12 1 7 8 1 C15 7 13 12 8 18Z" fill="#4a6741" opacity="0.6"/></svg>
+
+<svg class="bird" style="top:12%;animation-duration:22s;animation-delay:6s;" viewBox="0 0 40 16" width="40" height="16" fill="none">
+  <g class="bird-wing"><path d="M2 10 Q10 2 20 8" stroke="#5a7050" stroke-width="1.8" stroke-linecap="round" fill="none"/></g>
+  <path d="M20 8 Q30 2 38 10" stroke="#5a7050" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+</svg>
+<svg class="bird" style="top:18%;animation-duration:28s;animation-delay:14s;" viewBox="0 0 36 14" width="36" height="14" fill="none">
+  <g class="bird-wing"><path d="M2 9 Q9 2 18 7" stroke="#6a8060" stroke-width="1.5" stroke-linecap="round" fill="none"/></g>
+  <path d="M18 7 Q27 2 34 9" stroke="#6a8060" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+</svg>
+<svg class="bird" style="top:8%;animation-duration:35s;animation-delay:20s;" viewBox="0 0 30 12" width="30" height="12" fill="none">
+  <g class="bird-wing"><path d="M2 8 Q8 2 15 6" stroke="#7a9070" stroke-width="1.5" stroke-linecap="round" fill="none"/></g>
+  <path d="M15 6 Q22 2 28 8" stroke="#7a9070" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+</svg>
+
+<div class="butterfly">
+  <svg width="30" height="24" viewBox="0 0 30 24" fill="none">
+    <g class="wing-l"><ellipse cx="8" cy="10" rx="8" ry="10" fill="#f5c842" opacity="0.75" transform="rotate(-10 8 10)"/><ellipse cx="6" cy="16" rx="5" ry="6" fill="#e8a820" opacity="0.6" transform="rotate(10 6 16)"/></g>
+    <g class="wing-r"><ellipse cx="22" cy="10" rx="8" ry="10" fill="#f5c842" opacity="0.75" transform="rotate(10 22 10)"/><ellipse cx="24" cy="16" rx="5" ry="6" fill="#e8a820" opacity="0.6" transform="rotate(-10 24 16)"/></g>
+    <ellipse cx="15" cy="12" rx="2" ry="8" fill="#5a3010"/>
+    <line x1="13" y1="5" x2="10" y2="1" stroke="#5a3010" stroke-width="0.8"/>
+    <line x1="17" y1="5" x2="20" y2="1" stroke="#5a3010" stroke-width="0.8"/>
+  </svg>
+</div>
+
+<div class="firefly" style="left:20%;bottom:80px;--fx:15px;--fy:-12px;animation-duration:3.2s;animation-delay:5s;"></div>
+<div class="firefly" style="left:75%;bottom:90px;--fx:-18px;--fy:-8px;animation-duration:2.8s;animation-delay:7s;"></div>
+<div class="firefly" style="left:55%;bottom:75px;--fx:10px;--fy:-15px;animation-duration:3.6s;animation-delay:9s;"></div>
+<div class="firefly" style="left:35%;bottom:85px;--fx:-12px;--fy:-10px;animation-duration:4s;animation-delay:11s;"></div>
+
+<div class="container">
+  <div class="plant-wrap" style="position:relative;">
+    <div class="particle" style="width:3px;height:3px;top:28px;left:42px;--dx:-8px;animation-duration:3.1s;animation-delay:3.8s;"></div>
+    <div class="particle" style="width:2px;height:2px;top:34px;left:58px;--dx:10px;animation-duration:2.7s;animation-delay:4.5s;"></div>
+    <div class="particle" style="width:2.5px;height:2.5px;top:48px;left:30px;--dx:-6px;animation-duration:3.6s;animation-delay:5.2s;"></div>
+    <div class="particle" style="width:2px;height:2px;top:40px;left:68px;--dx:7px;animation-duration:2.9s;animation-delay:4.1s;"></div>
+    <div class="particle" style="width:3px;height:3px;top:55px;left:50px;--dx:-4px;animation-duration:3.3s;animation-delay:6s;"></div>
+    <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" width="100" height="120">
+      <line class="soil" x1="15" y1="98" x2="85" y2="98" stroke="#a8b89f" stroke-width="2" stroke-linecap="round"/>
+      <g class="plant-sway">
+        <path class="stem" d="M50 97 C50 80 50 60 50 40" stroke="#4a6741" stroke-width="2.5" stroke-linecap="round"/>
+        <path class="stem" d="M50 75 C40 68 28 65 22 60" stroke="#4a6741" stroke-width="2" stroke-linecap="round"/>
+        <path class="stem" d="M50 60 C60 52 72 50 78 44" stroke="#4a6741" stroke-width="2" stroke-linecap="round"/>
+        <g class="flutter-l"><ellipse cx="19" cy="56" rx="12" ry="6" fill="#6b8f61" transform="rotate(-30 19 56)"/><circle cx="10" cy="53" r="2.5" fill="#3a5231"/></g>
+        <g class="flutter-r"><ellipse cx="80" cy="40" rx="12" ry="6" fill="#6b8f61" transform="rotate(-20 80 40)"/><circle cx="89" cy="37" r="2.5" fill="#3a5231"/></g>
+        <g class="flutter-top"><ellipse cx="50" cy="33" rx="8" ry="14" fill="#4a6741" transform="rotate(5 50 33)"/></g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="badge"><span class="badge-dot"></span>Something's growing</div>
+  <h1 class="brand">Agri<span>Monk</span></h1>
+  <p class="brand-sub">India</p>
+  <p class="tagline" id="tagline" aria-label="We make agriculture, cool ;)"></p>
+  <div class="divider"></div>
+  <p class="coming-text">Coming Soon</p>
+</div>
+
+<script>
+  const words = [
+    { text: 'We', cls: '' }, { text: 'make', cls: '' },
+    { text: 'agriculture,', cls: '' }, { text: 'cool', cls: 'word-cool' }, { text: ';)', cls: '' },
+  ];
+  const taglineEl = document.getElementById('tagline');
+  words.forEach(w => {
+    const span = document.createElement('span');
+    span.className = 'word ' + w.cls;
+    span.textContent = w.text;
+    taglineEl.appendChild(span);
+    taglineEl.appendChild(document.createTextNode('\u00a0'));
+  });
+  const spans = taglineEl.querySelectorAll('.word');
+  const BASE = 1800, GAP = 180;
+  spans.forEach((span, i) => setTimeout(() => span.classList.add('visible'), BASE + i * GAP));
+</script>
+</body>
+</html>
