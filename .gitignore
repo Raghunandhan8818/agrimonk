@@ -24,3 +24,6 @@ yarn-error.log*
 
 # subagent-driven-development scratch workspace
 /.superpowers
+
+# Local Netlify folder
+.netlify
